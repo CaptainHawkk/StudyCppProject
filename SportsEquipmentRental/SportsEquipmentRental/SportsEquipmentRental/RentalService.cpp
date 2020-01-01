@@ -422,8 +422,8 @@ Equipment RentalService::updateEquipmentValues(unsigned long int id)
 
 void RentalService::updateEquipmentToFileOptional(Equipment& equipment, fstream& fileManager)
 {
-	ofstream tempFileManager;
-	tempFileManager.open("equipment_temp.txt");
+	fstream tempFileManager;
+	tempFileManager.open("equipment_temp.txt", ios::out | ios::app);
 
 	//each equipment takes 11 lines in txt file
 	const unsigned int linesToNextEquipment = 11;
@@ -466,6 +466,7 @@ void RentalService::updateEquipmentToFileOptional(Equipment& equipment, fstream&
 			this->saveEquipmentToFileOptional(equipment, equipmentToUpdate, tempFileManager);
 			equipmentUpdated = true;
 			equipmentToUpdate.~Equipment();
+			
 		} else if (line.empty()) {
 			tempFileManager << endl;
 		} else {
@@ -490,7 +491,7 @@ void RentalService::updateEquipmentToFileOptional(Equipment& equipment, fstream&
 
 }
 
-void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equipment& equipmentToUpdate, ofstream& tempFileManager)
+void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equipment& equipmentToUpdate, fstream& tempFileManager)
 {
 	tempFileManager << updatedEquipment.getId() << endl;
 
@@ -551,7 +552,7 @@ void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equ
 
 	bool RentalService::deleteEquipmentById(unsigned long int id, fstream& fileManager) {
 
-		ofstream tempFileManager;
+		fstream tempFileManager;
 		tempFileManager.open("equipment_temp.txt", ios::out | ios::app);
 
 		//each equipment takes 11 lines in txt file
@@ -559,7 +560,11 @@ void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equ
 		const unsigned int shiftToNextId = 10;
 		unsigned int currentLine = 1;
 		bool equipmentDeleted = false;
+		bool rented = false;
 		string line = "";
+		string day = "";
+		string month = "";
+		string year = "";
 		string decrementedId = "";
 
 		while (getline(fileManager, line)) {
@@ -567,11 +572,37 @@ void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equ
 			bool isThisEquipmentIdToUpdate = line.compare(to_string(id)) == 0;
 
 			if (isThisLineId && isThisEquipmentIdToUpdate) {
-				for (int i = 0; i < shiftToNextId - 1; i++) {
-					getline(fileManager, line);
+
+				Equipment equipmentToDelete = Equipment();
+				equipmentToDelete.setId(stoul(line));
+
+				getline(fileManager, line);
+				equipmentToDelete.setName(line);
+
+				getline(fileManager, line);
+				equipmentToDelete.setType(line);
+
+				getline(fileManager, line);
+				equipmentToDelete.setBorrower(line);
+
+				getline(fileManager, line);
+				equipmentToDelete.setRentalPrice(stoi(line));
+
+				getline(fileManager, day);
+				getline(fileManager, month);
+				getline(fileManager, year);
+				equipmentToDelete.setRentalDate(Date(stoi(day), stoi(month), stoi(year)));
+
+				getline(fileManager, line);
+				equipmentToDelete.setRented(stoi(line));
+				if (equipmentToDelete.getRented() == 1) {
+					rented = true;
+					saveEquipmentToFile(equipmentToDelete, tempFileManager);
+					equipmentToDelete.~Equipment();
+				} else {
+					equipmentToDelete.~Equipment();
+					equipmentDeleted = true;
 				}
-				equipmentDeleted = true;
-				break;
 			}
 			else if (line.empty()) {
 				tempFileManager << endl;
@@ -597,8 +628,10 @@ void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equ
 
 			if (equipmentDeleted) {
 				ColorPrinter::printTone("Equipment deleted", ColorPrinter::GREEN);
-			} else {
+			} else if (!equipmentDeleted && !rented){
 				ColorPrinter::printTone("Equipment not found", ColorPrinter::RED);
+			} else {
+				ColorPrinter::printTone("Cannot delete rented equipment", ColorPrinter::RED);
 			}
 
 

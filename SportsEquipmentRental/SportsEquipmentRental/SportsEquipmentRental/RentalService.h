@@ -27,7 +27,7 @@ private:
 	Equipment updateRefundValues(unsigned long int id);
 	Equipment updateEquipmentValues(unsigned long int id);
 	void updateEquipmentToFileOptional(Equipment& equipment, fstream& fileManager);
-	void saveEquipmentToFileOptional(Equipment& updatedEquipment, Equipment& equipmentToUpdate, ofstream& tempFileManager);
+	void saveEquipmentToFileOptional(Equipment& updatedEquipment, Equipment& equipmentToUpdate, fstream& tempFileManager);
 	void saveEquipmentToFile(Equipment& equipment, fstream& equipmentSaver);
 	bool deleteEquipmentById(unsigned long int id, fstream& fileManager);
 

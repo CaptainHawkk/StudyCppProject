@@ -57,13 +57,13 @@ void RentalController::optionController(int option)
 	} else if (option == 5) {
 		RentalController::displayRentsWith30DayPassed(); //done
 	} else if (option == 6) {
-		RentalController::handleRefund(); 
+		RentalController::handleRefund(); //done
 	} else if (option == 7) {
-		RentalController::handleRent();
+		RentalController::handleRent(); //done
 	} else if (option == 8) {
-		RentalController::findEquipmentByName();
+		RentalController::findEquipmentByName(); //done
 	} else if (option == 9) {
-		RentalController::findEquipmentByBorrowerName();
+		RentalController::findEquipmentByBorrowerName(); //done
 	} else if (option == 10) {
 		RentalController::displayBorrowedEquipment(); //done
 	} else if (option == 11) {
