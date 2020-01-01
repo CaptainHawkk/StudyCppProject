@@ -47,17 +47,17 @@ void RentalController::optionController(int option)
 	Magazine magazine = Magazine();
 	
 	if (option == 1) {
-		RentalController::addNewEquipment(magazine);
+		RentalController::addNewEquipment(magazine); //done
 	} else if (option == 2) {
-		RentalController::updateEquipment(magazine);
+		RentalController::updateEquipment(magazine); //done
 	} else if (option == 3) {
-		RentalController::deleteEquipment(magazine);
+		RentalController::deleteEquipment(magazine); //done
 	} else if (option == 4) {
-		RentalController::displayEquipment();
+		RentalController::displayEquipment(); //done
 	} else if (option == 5) {
-		RentalController::displayRentsWith30DayPassed();
+		RentalController::displayRentsWith30DayPassed(); //done
 	} else if (option == 6) {
-		RentalController::handleRefund();
+		RentalController::handleRefund(); 
 	} else if (option == 7) {
 		RentalController::handleRent();
 	} else if (option == 8) {
@@ -65,11 +65,11 @@ void RentalController::optionController(int option)
 	} else if (option == 9) {
 		RentalController::findEquipmentByBorrowerName();
 	} else if (option == 10) {
-		RentalController::displayBorrowedEquipment();
+		RentalController::displayBorrowedEquipment(); //done
 	} else if (option == 11) {
-		RentalController::displayNotBorrowedEquipment();
+		RentalController::displayNotBorrowedEquipment(); //done
 	} else if (option == 12) {
-		RentalController::displayMagazineCapacity(&magazine);
+		RentalController::displayMagazineCapacity(&magazine); //done
 	} else if (option == 13) {
 		exit(1);
 	} else {

@@ -14,7 +14,7 @@ public:
 	void printDate();
 	void dateValidator();
 
-	bool the30DayHasPassed(Date date);
+	static bool the30DayHasPassed(Date date);
 
 	void setDay(int day);
 	void setMonth(int month);

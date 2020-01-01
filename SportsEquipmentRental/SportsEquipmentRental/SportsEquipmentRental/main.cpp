@@ -8,6 +8,12 @@ using namespace std;
 int main() {
 
 	RentalController rentalController;
+	
+	string line = "5";
+	unsigned long int intValue = stoul(line);
+	intValue--;
+	cout << to_string(intValue);
+
 	while (true) {
 		rentalController.printMainMenu();
 		int number;

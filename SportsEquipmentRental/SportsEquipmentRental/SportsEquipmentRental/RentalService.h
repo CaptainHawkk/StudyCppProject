@@ -5,9 +5,7 @@
 class RentalService
 {
 protected:
-	void saveEquipmentToFile(Equipment& equipment, fstream& equipmentSaver);
 	void addNewEquipment(Magazine& magazine);
-	void displayMagazineCapacity(Magazine* magazine);
 	void updateEquipment(Magazine& magazine);
 	void deleteEquipment(Magazine& magazine);
 	void displayEquipment();
@@ -18,10 +16,21 @@ protected:
 	void findEquipmentByBorrowerName();
 	void displayBorrowedEquipment();
 	void displayNotBorrowedEquipment();
+	void displayMagazineCapacity(Magazine* magazine);
 
+	
+private:
+	string decrementIdFromString(string line);
+	void displayEquipmentByBorrowerName(string name, fstream& equipmentFileManager);
+	void displayEquipmentByName(string name, fstream& equipmentFileManager);
+	Equipment updateRentValues(unsigned long int id);
+	Equipment updateRefundValues(unsigned long int id);
 	Equipment updateEquipmentValues(unsigned long int id);
 	void updateEquipmentToFileOptional(Equipment& equipment, fstream& fileManager);
 	void saveEquipmentToFileOptional(Equipment& updatedEquipment, Equipment& equipmentToUpdate, ofstream& tempFileManager);
+	void saveEquipmentToFile(Equipment& equipment, fstream& equipmentSaver);
+	bool deleteEquipmentById(unsigned long int id, fstream& fileManager);
+
 };
 
 

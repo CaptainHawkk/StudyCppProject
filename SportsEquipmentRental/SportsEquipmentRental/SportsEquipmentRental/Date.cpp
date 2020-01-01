@@ -107,7 +107,7 @@ void Date::dateValidator()
 
 
 
-bool Date::the30DayHasPassed(Date date)
+ bool Date::the30DayHasPassed(Date date)
 {
     unsigned short today_day;
     unsigned short today_month;

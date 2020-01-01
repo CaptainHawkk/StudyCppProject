@@ -7,7 +7,5 @@ public:
 	void printMainMenu();
 	int choseOption();
 	void optionController(int option);
-
-	
 };
 
