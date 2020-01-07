@@ -15,7 +15,6 @@ void Magazine::getMagazineDataFromFile()
 			magazineItemsQuantity++;
 		}
 	}
-	std::cout << magazineItemsQuantity << endl;
 	this->setActualCapacity(magazineItemsQuantity);
 }
 

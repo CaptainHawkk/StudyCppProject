@@ -36,5 +36,9 @@ public:
 	bool getRented();
 	Date getRentalDate();
 	string getBorrower();
+
+	friend ostream& operator<< (ostream& wyjscie, const Equipment& equipment);
+
+
 };
 

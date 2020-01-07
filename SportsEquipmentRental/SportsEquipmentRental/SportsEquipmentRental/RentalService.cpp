@@ -59,7 +59,7 @@ void RentalService::updateEquipment(Magazine& magazine)
 			
 			Equipment equipment = updateEquipmentValues(id);
 
-			this->updateEquipmentToFileOptional(equipment, equipmentFileManager);
+			this->updateEquipmentToFileIfNotRented(equipment, equipmentFileManager);
 		} else {
 			ColorPrinter::printTone("Couldn't open file", ColorPrinter::RED);
 		}
@@ -80,7 +80,7 @@ void RentalService::deleteEquipment(Magazine& magazine)
 		
 		bool decrementCapacity = deleteEquipmentById(id,equipmentFileManager);
 
-		if (decrementCapacity) {
+		if (decrementCapacity == 1) {
 			magazine.decrementActualCapacity();
 		}
 	} else {
@@ -96,35 +96,14 @@ void RentalService::displayEquipment()
 	if (equipmenFileManager.is_open()) {
 
 		string line = "";
-		string day = "";
-		string month = "";
-		string year = "";
-
 		while (getline(equipmenFileManager, line)) {
 
 			if (!line.empty()) {
-				cout << "Id: " << line << endl;
 
-				getline(equipmenFileManager, line);
-				cout << "Name: " << line << endl;
-
-				getline(equipmenFileManager, line);
-				cout << "Type: " << line << endl;
-
-				getline(equipmenFileManager, line);
-				cout << "Borrower: " << line << endl;
-
-
-				getline(equipmenFileManager, line);
-				cout << "Rental price :" << line << endl;
-
-				getline(equipmenFileManager, day);
-				getline(equipmenFileManager, month);
-				getline(equipmenFileManager, year);
-				cout << "Rental date: " << day << "-" << month << "-" << year << endl;
-
-				getline(equipmenFileManager, line);
-				cout << "Rented: " << line << endl << endl;
+				Equipment equipment = getEquipmentFromFile(equipmenFileManager, line);
+				cout << equipment << endl;
+				equipment.~Equipment();
+				
 			}
 		}
 	}
@@ -143,42 +122,14 @@ void RentalService::displayRentsWith30DayPassed()
 
 		int entityCounter = 0;
 		string line = "";
-		string day = "";
-		string month = "";
-		string year = "";
 
 		while (getline(equipmentFileManager, line)) {
 
 			if (!line.empty()) {
-				Equipment equipment = Equipment();
-
-				getline(equipmentFileManager, line);
-				equipment.setName(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setType(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setBorrower(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setRentalPrice(stoi(line));
-
-				getline(equipmentFileManager, day);
-				getline(equipmentFileManager, month);
-				getline(equipmentFileManager, year);
-				equipment.setRentalDate(Date(stoi(day), stoi(month), stoi(year)));
-
-				getline(equipmentFileManager, line);
-				equipment.setRented(stoi(line));
+				Equipment equipment = getEquipmentFromFile(equipmentFileManager,line);
 
 				if (equipment.getRented() && Date::the30DayHasPassed(equipment.getRentalDate()) && equipment.getRentalDate().getYear() != 0) {
-					cout << "Name: " << equipment.getName() << endl;
-					cout << "Borrower: " << equipment.getBorrower() << endl;
-					cout << "Rental price: " << equipment.getRentalPrice() << endl;
-					cout << "Rental date: " << equipment.getRentalDate().getDay() << "-" <<
-						equipment.getRentalDate().getMonth() << "-" <<
-						equipment.getRentalDate().getYear() << endl;
+					cout << equipment << endl;
 					equipment.~Equipment();
 				}
 			}
@@ -205,7 +156,7 @@ void RentalService::handleRefund()
 
 		Equipment equipment = updateRefundValues(id);
 
-		this->updateEquipmentToFileOptional(equipment, equipmentFileManager);
+		this->updateEquipmentToFileIfRented(equipment, equipmentFileManager);
 	}
 	else {
 		ColorPrinter::printTone("Couldn't open file", ColorPrinter::RED);
@@ -226,7 +177,7 @@ void RentalService::handleRent()
 
 		Equipment equipment = updateRentValues(id);
 
-		this->updateEquipmentToFileOptional(equipment, equipmentFileManager);
+		this->updateEquipmentToFileIfNotRented(equipment, equipmentFileManager);
 	} else {
 		ColorPrinter::printTone("Couldn't open file", ColorPrinter::RED);
 	}
@@ -260,8 +211,8 @@ void RentalService::findEquipmentByBorrowerName()
 	if (equipmentFileManager.is_open()) {
 		string borrowerName;
 
-		ColorPrinter::printTone("Find equipment by name", ColorPrinter::BLUE);
-		ColorPrinter::printTone("Write equipment name", ColorPrinter::BLUE);
+		ColorPrinter::printTone("Find equipment by Borrower name", ColorPrinter::BLUE);
+		ColorPrinter::printTone("Write Borrower name", ColorPrinter::BLUE);
 		std::cin >> borrowerName;
 
 		this->displayEquipmentByBorrowerName(borrowerName, equipmentFileManager);
@@ -281,46 +232,14 @@ void RentalService::displayBorrowedEquipment()
 
 		int entityCounter = 0;
 		string line = "";
-		string day = "";
-		string month = "";
-		string year = "";
 
 		while (getline(equipmentFileManager, line)) {
 
 			if (!line.empty()) {
-				Equipment equipment = Equipment();
-
-				equipment.setId(stoul(line));
-
-				getline(equipmentFileManager, line);
-				equipment.setName(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setType(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setBorrower(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setRentalPrice(stoi(line));
-
-				getline(equipmentFileManager, day);
-				getline(equipmentFileManager, month);
-				getline(equipmentFileManager, year);
-				equipment.setRentalDate(Date(stoi(day), stoi(month), stoi(year)));
-
-				getline(equipmentFileManager, line);
-				equipment.setRented(stoi(line));
+				Equipment equipment = getEquipmentFromFile(equipmentFileManager,line);
 
 				if (equipment.getRented() == true) {
-					cout << "Id:" << equipment.getId() << endl;
-					cout << "Name: " << equipment.getName() << endl;
-					cout << "Type: " << equipment.getType() << endl;
-					cout << "Borrower: " << equipment.getBorrower() << endl;
-					cout << "Rental price: " << equipment.getRentalPrice() << endl;
-					cout << "Rental date: " << equipment.getRentalDate().getDay() << "-" <<
-						equipment.getRentalDate().getMonth() << "-" <<
-						equipment.getRentalDate().getYear() << endl << endl;
+					cout <<  equipment << endl;
 					equipment.~Equipment();
 					entityCounter++;
 				}
@@ -344,46 +263,15 @@ void RentalService::displayNotBorrowedEquipment()
 
 		int entityCounter = 0;
 		string line = "";
-		string day = "";
-		string month = "";
-		string year = "";
+
 
 		while (getline(equipmentFileManager, line)) {
 
 			if (!line.empty()) {
-				Equipment equipment = Equipment();
-
-				equipment.setId(stoul(line));
-
-				getline(equipmentFileManager, line);
-				equipment.setName(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setType(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setBorrower(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setRentalPrice(stoi(line));
-
-				getline(equipmentFileManager, day);
-				getline(equipmentFileManager, month);
-				getline(equipmentFileManager, year);
-				equipment.setRentalDate(Date(stoi(day), stoi(month), stoi(year)));
-
-				getline(equipmentFileManager, line);
-				equipment.setRented(stoi(line));
+				Equipment equipment = getEquipmentFromFile(equipmentFileManager, line);
 
 				if (equipment.getRented() == false) {
-					cout << "Id:" << equipment.getId() << endl;
-					cout << "Type :" << equipment.getType() << endl;
-					cout << "Name: " << equipment.getName() << endl;
-					cout << "Borrower: " << equipment.getBorrower() << endl;
-					cout << "Rental price: " << equipment.getRentalPrice() << endl;
-					cout << "Rental date: " << equipment.getRentalDate().getDay() << "-" <<
-						equipment.getRentalDate().getMonth() << "-" <<
-						equipment.getRentalDate().getYear() << endl << endl;
+					cout << equipment << endl;
 					equipment.~Equipment();
 					entityCounter++;
 				}
@@ -420,6 +308,36 @@ Equipment RentalService::updateEquipmentValues(unsigned long int id)
 	return equipment;
 }
 
+Equipment RentalService::getEquipmentFromFile(fstream& equipmentFileManager, string& line)
+{
+	string day = "", month = "", year = "";
+
+	Equipment equipmentfromFile = Equipment();
+	equipmentfromFile.setId(stoul(line));
+
+	getline(equipmentFileManager, line);
+	equipmentfromFile.setName(line);
+
+	getline(equipmentFileManager, line);
+	equipmentfromFile.setType(line);
+
+	getline(equipmentFileManager, line);
+	equipmentfromFile.setBorrower(line);
+
+	getline(equipmentFileManager, line);
+	equipmentfromFile.setRentalPrice(stoul(line));
+
+	getline(equipmentFileManager, day);
+	getline(equipmentFileManager, month);
+	getline(equipmentFileManager, year);
+	equipmentfromFile.setRentalDate(Date(stoi(day), stoi(month), stoi(year)));
+
+	getline(equipmentFileManager, line);
+	equipmentfromFile.setRented(stoul(line));
+
+	return equipmentfromFile;
+}
+
 void RentalService::updateEquipmentToFileOptional(Equipment& equipment, fstream& fileManager)
 {
 	fstream tempFileManager;
@@ -441,28 +359,7 @@ void RentalService::updateEquipmentToFileOptional(Equipment& equipment, fstream&
 
 		if (isThisLineId && isThisEquipmentIdToUpdate) {
 
-			Equipment equipmentToUpdate = Equipment();
-
-			getline(fileManager, line);
-			equipmentToUpdate.setName(line);
-
-			getline(fileManager, line);
-			equipmentToUpdate.setType(line);
-
-			getline(fileManager, line);
-			equipmentToUpdate.setBorrower(line);
-
-			getline(fileManager, line);
-			equipmentToUpdate.setRentalPrice(stoi(line));
-
-			getline(fileManager, day);
-			getline(fileManager, month);
-			getline(fileManager, year);
-			equipmentToUpdate.setRentalDate(Date(stoi(day), stoi(month), stoi(year)));
-
-			getline(fileManager, line);
-			equipmentToUpdate.setRented(stoi(line));
-
+			Equipment equipmentToUpdate = getEquipmentFromFile(fileManager,line);
 			this->saveEquipmentToFileOptional(equipment, equipmentToUpdate, tempFileManager);
 			equipmentUpdated = true;
 			equipmentToUpdate.~Equipment();
@@ -562,39 +459,17 @@ void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equ
 		bool equipmentDeleted = false;
 		bool rented = false;
 		string line = "";
-		string day = "";
-		string month = "";
-		string year = "";
 		string decrementedId = "";
 
 		while (getline(fileManager, line)) {
 			bool isThisLineId = currentLine % shiftToNextId == 1;
-			bool isThisEquipmentIdToUpdate = line.compare(to_string(id)) == 0;
+			bool isThisEquipmentIdToUpdate = (line == to_string(id)) == 1;
 
 			if (isThisLineId && isThisEquipmentIdToUpdate) {
 
-				Equipment equipmentToDelete = Equipment();
-				equipmentToDelete.setId(stoul(line));
+				Equipment equipmentToDelete = getEquipmentFromFile(fileManager,line);
+				//currentLine += 8;
 
-				getline(fileManager, line);
-				equipmentToDelete.setName(line);
-
-				getline(fileManager, line);
-				equipmentToDelete.setType(line);
-
-				getline(fileManager, line);
-				equipmentToDelete.setBorrower(line);
-
-				getline(fileManager, line);
-				equipmentToDelete.setRentalPrice(stoi(line));
-
-				getline(fileManager, day);
-				getline(fileManager, month);
-				getline(fileManager, year);
-				equipmentToDelete.setRentalDate(Date(stoi(day), stoi(month), stoi(year)));
-
-				getline(fileManager, line);
-				equipmentToDelete.setRented(stoi(line));
 				if (equipmentToDelete.getRented() == 1) {
 					rented = true;
 					saveEquipmentToFile(equipmentToDelete, tempFileManager);
@@ -602,6 +477,9 @@ void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equ
 				} else {
 					equipmentToDelete.~Equipment();
 					equipmentDeleted = true;
+					currentLine++;
+					getline(fileManager, line); // zeby ominê³o puste pole po usuniêciu
+					break;
 				}
 			}
 			else if (line.empty()) {
@@ -613,16 +491,22 @@ void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equ
 			currentLine++;
 		}
 
+		
+
 		while(getline(fileManager,line)){
-		bool isThisLineId = currentLine % shiftToNextId == 1;
-						if (isThisLineId) {
-							string value = line;
-							decrementedId = decrementIdFromString(value);
-							tempFileManager << decrementedId << endl;
-						} else {
-						tempFileManager << line << endl;
-						}	
-				
+				bool isThisLineId = currentLine % shiftToNextId == 1;
+
+				if (line.empty()) {
+					tempFileManager << endl;
+				}
+				else {
+					Equipment equipmentToDelete = getEquipmentFromFile(fileManager, line);
+					int oldId = equipmentToDelete.getId();
+					equipmentToDelete.setId(oldId - 1);
+					saveEquipmentToFile(equipmentToDelete, tempFileManager);
+					equipmentToDelete.~Equipment();
+					getline(fileManager, line);
+				}
 				currentLine++;
 			}
 
@@ -643,10 +527,125 @@ void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equ
 
 			return equipmentDeleted;
 	}
+
+	void RentalService::updateEquipmentToFileIfNotRented(Equipment& equipment, fstream& equipmentFileManager)
+	{
+		fstream tempFileManager;
+		tempFileManager.open("equipment_temp.txt", ios::out | ios::app);
+
+		//each equipment takes 11 lines in txt file
+		const unsigned int linesToNextEquipment = 11;
+		const unsigned int shiftToNextId = 10;
+		unsigned int currentLine = 1;
+		bool equipmentUpdated = false;
+		bool equipmentRented = false;
+		string line = "";
+
+		while (getline(equipmentFileManager, line)) {
+			bool isThisLineId = currentLine % shiftToNextId == 1;
+			bool isThisEquipmentIdToUpdate = line.compare(to_string(equipment.getId())) == 0;
+
+			if (isThisLineId && isThisEquipmentIdToUpdate) {
+
+				Equipment equipmentToUpdate = getEquipmentFromFile(equipmentFileManager, line);
+				if (equipment.getRented() == 0) {
+					this->saveEquipmentToFileOptional(equipment, equipmentToUpdate, tempFileManager);
+					equipmentUpdated = true;
+					equipmentToUpdate.~Equipment();
+				} else {
+					this->saveEquipmentToFile(equipmentToUpdate, tempFileManager);
+					equipmentRented = true;
+					equipmentToUpdate.~Equipment();
+				}
+			} else if (line.empty()) {
+				tempFileManager << endl;
+			} else {
+				tempFileManager << line << endl;
+			}
+			currentLine++;
+		}
+
+		if (equipmentUpdated) {
+			ColorPrinter::printTone("Equipment updated", ColorPrinter::GREEN);
+		} else if(equipmentRented){
+			ColorPrinter::printTone("Cannot update rented equipment", ColorPrinter::RED);
+		} else {
+			ColorPrinter::printTone("Equipment not found", ColorPrinter::RED);
+		}
+
+		equipmentFileManager.close();
+		tempFileManager.close();
+
+
+
+		remove("equipment.txt");
+		rename("equipment_temp.txt", "equipment.txt");
+
+	}
+
+	void RentalService::updateEquipmentToFileIfRented(Equipment& equipment, fstream& equipmentFileManager)
+	{
+		fstream tempFileManager;
+		tempFileManager.open("equipment_temp.txt", ios::out | ios::app);
+
+		//each equipment takes 11 lines in txt file
+		const unsigned int linesToNextEquipment = 11;
+		const unsigned int shiftToNextId = 10;
+		unsigned int currentLine = 1;
+		bool equipmentUpdated = false;
+		bool equipmentNotRented = false;
+		string line = "";
+
+		while (getline(equipmentFileManager, line)) {
+			bool isThisLineId = currentLine % shiftToNextId == 1;
+			bool isThisEquipmentIdToUpdate = line.compare(to_string(equipment.getId())) == 0;
+
+			if (isThisLineId && isThisEquipmentIdToUpdate) {
+
+				Equipment equipmentToUpdate = getEquipmentFromFile(equipmentFileManager, line);
+				if (equipment.getRented() == 1) {
+					this->saveEquipmentToFileOptional(equipment, equipmentToUpdate, tempFileManager);
+					equipmentUpdated = true;
+					equipmentToUpdate.~Equipment();
+				}
+				else {
+					this->saveEquipmentToFile(equipmentToUpdate, tempFileManager);
+					equipmentNotRented = true;
+					equipmentToUpdate.~Equipment();
+				}
+			}
+			else if (line.empty()) {
+				tempFileManager << endl;
+			}
+			else {
+				tempFileManager << line << endl;
+			}
+			currentLine++;
+		}
+
+		if (equipmentUpdated) {
+			ColorPrinter::printTone("Equipment updated", ColorPrinter::GREEN);
+		}
+		else if (equipmentNotRented) {
+			ColorPrinter::printTone("Cannot refund not borrowed equipment", ColorPrinter::RED);
+		}
+		else {
+			ColorPrinter::printTone("Equipment not found", ColorPrinter::RED);
+		}
+
+		equipmentFileManager.close();
+		tempFileManager.close();
+
+
+
+		remove("equipment.txt");
+		rename("equipment_temp.txt", "equipment.txt");
+
+	}
 	
 	string RentalService::decrementIdFromString(string line)
 	{
-		unsigned long int intValue = stoul(line);
+		int intValue = stoul(line);
 		intValue--;
 		return to_string(intValue);
 	}
@@ -654,88 +653,51 @@ void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equ
 	void RentalService::displayEquipmentByName(string name, fstream& equipmentFileManager) {
 
 		string line = "";
-		string day = "";
-		string month = "";
-		string year = "";
+		int EntityCounter = 0;
 
 		while (getline(equipmentFileManager, line)) {
 
 			if (!line.empty()) {
-				Equipment equipment = Equipment();
-
-				getline(equipmentFileManager, line);
-				equipment.setName(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setType(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setBorrower(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setRentalPrice(stoi(line));
-
-				getline(equipmentFileManager, day);
-				getline(equipmentFileManager, month);
-				getline(equipmentFileManager, year);
-				equipment.setRentalDate(Date(stoi(day), stoi(month), stoi(year)));
-
-				getline(equipmentFileManager, line);
-				equipment.setRented(stoi(line));
-
-				if (equipment.getName().compare(name))
-					cout << "Name: " << equipment.getName() << endl;
-				cout << "Borrower: " << equipment.getBorrower() << endl;
-				cout << "Rental price: " << equipment.getRentalPrice() << endl;
-				cout << "Rental date: " << equipment.getRentalDate().getDay() << "-" <<
-					equipment.getRentalDate().getDay() << "-" <<
-					equipment.getRentalDate().getDay() << endl;
-				equipment.~Equipment();
+				Equipment equipment = getEquipmentFromFile(equipmentFileManager, line);
+		
+				if (equipment.getName() == name){
+					cout << equipment << endl;
+					equipment.~Equipment();
+					EntityCounter++;
+				} else {
+					equipment.~Equipment();
+				}
 			}
+		}
+
+		if (EntityCounter == 0) {
+			ColorPrinter::printTone("Equipment with this name doesn't exist", ColorPrinter::RED);
 		}
 	}
 
 	void RentalService::displayEquipmentByBorrowerName(string borrowerName, fstream& equipmentFileManager) {
+
 		string line = "";
-		string day = "";
-		string month = "";
-		string year = "";
+		int EntityCounter = 0;
 
 		while (getline(equipmentFileManager, line)) {
 
 			if (!line.empty()) {
-				Equipment equipment = Equipment();
 
-				getline(equipmentFileManager, line);
-				equipment.setName(line);
+				Equipment equipment = getEquipmentFromFile(equipmentFileManager,line);
 
-				getline(equipmentFileManager, line);
-				equipment.setType(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setBorrower(line);
-
-				getline(equipmentFileManager, line);
-				equipment.setRentalPrice(stoi(line));
-
-				getline(equipmentFileManager, day);
-				getline(equipmentFileManager, month);
-				getline(equipmentFileManager, year);
-				equipment.setRentalDate(Date(stoi(day), stoi(month), stoi(year)));
-
-				getline(equipmentFileManager, line);
-				equipment.setRented(stoi(line));
-
-				if (equipment.getBorrower().compare(borrowerName)) {
-					cout << "Name: " << equipment.getName() << endl;
-					cout << "Borrower: " << equipment.getBorrower() << endl;
-					cout << "Rental price: " << equipment.getRentalPrice() << endl;
-					cout << "Rental date: " << equipment.getRentalDate().getDay() << "-" <<
-						equipment.getRentalDate().getDay() << "-" <<
-						equipment.getRentalDate().getDay() << endl;
+				if (equipment.getBorrower() == borrowerName) {
+					cout << equipment << endl;
+					equipment.~Equipment();
+					EntityCounter++;
+				} else {
 					equipment.~Equipment();
 				}
 			}
+		}
+
+		if (EntityCounter == 0) {
+			ColorPrinter::printTone("Borrower with this name doesn't exist", ColorPrinter::RED);
 		}
 	}
 
@@ -772,3 +734,53 @@ void RentalService::saveEquipmentToFileOptional(Equipment& updatedEquipment, Equ
 
 		return equipment;
 	}
+
+	//void RentalService::updateEquipmentToFileOptional(Equipment& equipment, fstream& fileManager){
+	//fstream tempFileManager;
+	//tempFileManager.open("equipment_temp.txt", ios::out | ios::app);
+
+	////each equipment takes 11 lines in txt file
+	//const unsigned int linesToNextEquipment = 11;
+	//const unsigned int shiftToNextId = 10;
+	//unsigned int currentLine = 1;
+	//bool equipmentUpdated = false;
+	//string line = "";
+	//string day = "";
+	//string month = "";
+	//string year = "";
+
+	//while (getline(fileManager, line)) {
+	//	bool isThisLineId = currentLine % shiftToNextId == 1;
+	//	bool isThisEquipmentIdToUpdate = line.compare(to_string(equipment.getId())) == 0;
+
+	//	if (isThisLineId && isThisEquipmentIdToUpdate) {
+
+	//		Equipment equipmentToUpdate = getEquipmentFromFile(fileManager,line);
+	//		this->saveEquipmentToFileOptional(equipment, equipmentToUpdate, tempFileManager);
+	//		equipmentUpdated = true;
+	//		equipmentToUpdate.~Equipment();
+	//		
+	//	} else if (line.empty()) {
+	//		tempFileManager << endl;
+	//	} else {
+	//		tempFileManager << line << endl;
+	//	}
+	//	currentLine++;
+	//}
+
+	//if (equipmentUpdated) {
+	//	ColorPrinter::printTone("Equipment updated", ColorPrinter::GREEN);
+	//} else {
+	//	ColorPrinter::printTone("Equipment not found", ColorPrinter::RED);
+	//}
+	//
+	//fileManager.close();
+	//tempFileManager.close();
+
+
+
+	//remove("equipment.txt");
+	//rename("equipment_temp.txt", "equipment.txt");
+
+
+

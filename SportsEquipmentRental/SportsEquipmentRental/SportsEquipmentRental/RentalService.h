@@ -17,6 +17,7 @@ protected:
 	void displayBorrowedEquipment();
 	void displayNotBorrowedEquipment();
 	void displayMagazineCapacity(Magazine* magazine);
+	
 
 	
 private:
@@ -26,11 +27,13 @@ private:
 	Equipment updateRentValues(unsigned long int id);
 	Equipment updateRefundValues(unsigned long int id);
 	Equipment updateEquipmentValues(unsigned long int id);
+	Equipment getEquipmentFromFile(fstream& equipmentFileManager, string& line);
 	void updateEquipmentToFileOptional(Equipment& equipment, fstream& fileManager);
 	void saveEquipmentToFileOptional(Equipment& updatedEquipment, Equipment& equipmentToUpdate, fstream& tempFileManager);
 	void saveEquipmentToFile(Equipment& equipment, fstream& equipmentSaver);
 	bool deleteEquipmentById(unsigned long int id, fstream& fileManager);
-
+	void updateEquipmentToFileIfNotRented(Equipment& equipment, fstream& equipmentFileManager);
+	void updateEquipmentToFileIfRented(Equipment& equipment, fstream& equipmentFileManager);
 };
 
 

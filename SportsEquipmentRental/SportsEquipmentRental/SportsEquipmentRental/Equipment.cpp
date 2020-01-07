@@ -114,3 +114,15 @@ string Equipment::getBorrower()
 {
 	return this->borrower;
 }
+
+ostream& operator<<(ostream& output, const Equipment& equipment)
+{
+	cout << "Id: " << equipment.id << endl;
+	cout << "Type: " << equipment.type << endl;
+	cout << "Name: " << equipment.name << endl;
+	cout << "Borrower: " << equipment.borrower << endl;
+	cout << "Rental price: " << equipment.rentalPrice << endl;
+	cout << "Rental date: " << equipment.rentalDate;
+	cout << "Rented: " << equipment.rented << endl;
+	return output;
+}

@@ -2,8 +2,9 @@
 #include "Date.h"
 #include <ctime>
 #include <iostream>
+#include <string>
 
-using namespace std;
+
 
 Date::Date()
 {
@@ -38,7 +39,7 @@ void Date::setDate(unsigned short day, unsigned short month, unsigned short year
 
 void Date::printDate()
 {
-    cout << day << "-" << month << "-" << year << endl;
+    std::cout << day << "-" << month << "-" << year << std::endl;
 }
 
 
@@ -208,4 +209,10 @@ int Date::getMonth()
 int Date::getYear()
 {
     return this->year;
+}
+
+ostream& operator<<(ostream& output, const Date& date)
+{
+    cout << date.day << "-" << date.month << "-" << date.year << endl;
+    return output;
 }
