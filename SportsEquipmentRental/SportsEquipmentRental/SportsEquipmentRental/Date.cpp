@@ -194,19 +194,19 @@ void Date::setYear(int year)
 
 
 
-int Date::getDay()
+int Date::getDay() const
 {
     return this->day;
 }
 
 
-int Date::getMonth()
+int Date::getMonth() const
 {
     return this->month;
 }
 
 
-int Date::getYear()
+int Date::getYear() const
 {
     return this->year;
 }

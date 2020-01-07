@@ -27,13 +27,13 @@ Magazine::~Magazine()
 {
 }
 
-int Magazine::getMaximumCapacity()
+int Magazine::getMaximumCapacity() const
 {
 	return this->maximumCapacity;
 }
 
 
-int Magazine::getActualCapacity()
+int Magazine::getActualCapacity() const
 {
 	return this->actualCapacity;
 }
@@ -57,7 +57,7 @@ void Magazine::decrementActualCapacity()
 }
 
 
-string Magazine::getName()
+string Magazine::getName() const
 {
 	return name;
 }

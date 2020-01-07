@@ -26,9 +26,9 @@ public:
 	void setDay(int day);
 	void setMonth(int month);
 	void setYear(int year);
-	int getDay();
-	int getMonth();
-	int getYear();
+	int getDay() const;
+	int getMonth() const;
+	int getYear() const;
 	friend ostream& operator<< (ostream& wyjscie, const Date& date);
 };
 

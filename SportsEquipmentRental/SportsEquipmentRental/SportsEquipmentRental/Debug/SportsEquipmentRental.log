@@ -1,2 +1,9 @@
-﻿  RentalService.cpp
+﻿  Date.cpp
+  Equipment.cpp
+  Magazine.cpp
+  RentalController.cpp
+  RentalService.cpp
+  main.cpp
+  Generowanie kodu...
+C:\Users\rmagr\Documents\StudyCppProject\SportsEquipmentRental\SportsEquipmentRental\SportsEquipmentRental\Date.cpp(175): warning C4715: "Date::the30DayHasPassed”: niewszystkie ścieżki kodu zwracają wartość
   SportsEquipmentRental.vcxproj -> C:\Users\rmagr\Documents\StudyCppProject\SportsEquipmentRental\SportsEquipmentRental\Debug\SportsEquipmentRental.exe

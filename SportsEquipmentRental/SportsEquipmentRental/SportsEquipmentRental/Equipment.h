@@ -29,13 +29,13 @@ public:
 	void setRentalDate(Date date);
 	void setBorrower(string borrower);
 	
-	unsigned long int getId();
-	string getName();
-	string getType();
-	double getRentalPrice();
-	bool getRented();
-	Date getRentalDate();
-	string getBorrower();
+	unsigned long int getId() const;
+	string getName() const;
+	string getType() const;
+	double getRentalPrice() const;
+	bool getRented() const;
+	Date getRentalDate() const;
+	string getBorrower() const;
 
 	friend ostream& operator<< (ostream& wyjscie, const Equipment& equipment);
 

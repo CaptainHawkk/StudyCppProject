@@ -74,55 +74,58 @@ void Equipment::setBorrower(string borrower)
 }
 
 
-unsigned long int Equipment::getId()
+unsigned long int Equipment::getId() const
 {
 	return this->id;
 }
 
 
-string Equipment::getName()
+string Equipment::getName() const
 {
 	return this->name;
 }
 
 
-string Equipment::getType()
+string Equipment::getType() const
 {
 	return this->type;
 }
 
 
-double Equipment::getRentalPrice()
+double Equipment::getRentalPrice() const
 {
 	return this->rentalPrice;
 }
 
 
-bool Equipment::getRented()
+bool Equipment::getRented() const
 {
 	return this->rented;
 }
 
 
-Date Equipment::getRentalDate()
+Date Equipment::getRentalDate() const
 {
 	return this->rentalDate;
 }
 
 
-string Equipment::getBorrower()
+string Equipment::getBorrower() const
 {
 	return this->borrower;
 }
 
 ostream& operator<<(ostream& output, const Equipment& equipment)
 {
-	cout << "Id: " << equipment.id << endl;
-	cout << "Type: " << equipment.type << endl;
-	cout << "Name: " << equipment.name << endl;
-	cout << "Borrower: " << equipment.borrower << endl;
-	cout << "Rental price: " << equipment.rentalPrice << endl;
-	cout << "Rental date: " << equipment.rentalDate;
-	cout << "Rented: " << equipment.rented << endl;
+	ColorPrinter::printTone("-------------------------------------", ColorPrinter::YELLOW); 
+	cout << endl;
+	cout << "   Id: " << equipment.id << endl;
+	cout << "   Type: " << equipment.type << endl;
+	cout << "   Name: " << equipment.name << endl;
+	cout << "   Borrower: " << equipment.borrower << endl;
+	cout << "   Rental price: " << equipment.rentalPrice << endl;
+	cout << "   Rental date: " << equipment.rentalDate;
+	cout << "   Rented: " << equipment.rented << endl << endl;
+	ColorPrinter::printTone("-------------------------------------", ColorPrinter::YELLOW);
 	return output;
 }

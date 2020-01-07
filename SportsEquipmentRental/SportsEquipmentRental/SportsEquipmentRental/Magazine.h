@@ -15,16 +15,14 @@ class Magazine
 public:
 
 	Magazine();
-
 	~Magazine();
 
-
-	int getMaximumCapacity();
-	int getActualCapacity();
+	int getMaximumCapacity() const;
+	int getActualCapacity() const;
 	void setActualCapacity(int actualCapacity);
 	void incrementActualCapacity();
 	void decrementActualCapacity();
-	string getName();
+	string getName() const;
 	
 	bool magazineIsFull();
 };
