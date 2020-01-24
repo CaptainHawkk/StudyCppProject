@@ -13,48 +13,108 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Pliki nagłówkowe\controller">
+      <UniqueIdentifier>{12047030-a866-44a2-bf9b-da680df89a3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\service">
+      <UniqueIdentifier>{af17b089-4ef4-46be-a349-32afe5548eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\model">
+      <UniqueIdentifier>{5ffec75b-62c6-4bf3-b147-dd7c0301a78c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\util">
+      <UniqueIdentifier>{8a1b1292-085f-4855-a53b-e98dff4db6c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\util">
+      <UniqueIdentifier>{e1e38ff8-271b-41f6-a84b-b087cbe37166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\service">
+      <UniqueIdentifier>{5f1e8287-2ebf-47b3-98a8-0383dc15ec32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\model">
+      <UniqueIdentifier>{03f5ee4c-3fb7-471f-b4d5-7ddb3d0baf17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\controller">
+      <UniqueIdentifier>{e323dfce-b933-48f0-94f2-3f25dfaea24e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Equipment.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Date.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Magazine.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="ColorPrinter.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="RentalController.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\util</Filter>
     </ClCompile>
     <ClCompile Include="RentalService.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\service</Filter>
+    </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>Pliki źródłowe\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Equipment.cpp">
+      <Filter>Pliki źródłowe\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Magazine.cpp">
+      <Filter>Pliki źródłowe\model</Filter>
+    </ClCompile>
+    <ClCompile Include="RentalController.cpp">
+      <Filter>Pliki źródłowe\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
+      <Filter>Pliki źródłowe\model</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginController.cpp">
+      <Filter>Pliki źródłowe\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginService.cpp">
+      <Filter>Pliki źródłowe\service</Filter>
+    </ClCompile>
+    <ClCompile Include="IdController.cpp">
+      <Filter>Pliki źródłowe\controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Equipment.h">
-      <Filter>Pliki nagłówkowe</Filter>
+    <ClInclude Include="ColorPrinter.h">
+      <Filter>Pliki nagłówkowe\util</Filter>
     </ClInclude>
     <ClInclude Include="Date.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipment.h">
+      <Filter>Pliki nagłówkowe\model</Filter>
     </ClInclude>
     <ClInclude Include="Magazine.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="ColorPrinter.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="RentalController.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\model</Filter>
     </ClInclude>
     <ClInclude Include="RentalService.h">
+      <Filter>Pliki nagłówkowe\service</Filter>
+    </ClInclude>
+    <ClInclude Include="RentalController.h">
+      <Filter>Pliki nagłówkowe\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="User.h">
+      <Filter>Pliki nagłówkowe\model</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginController.h">
+      <Filter>Pliki nagłówkowe\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginService.h">
+      <Filter>Pliki nagłówkowe\service</Filter>
+    </ClInclude>
+    <ClInclude Include="IdController.h">
+      <Filter>Pliki nagłówkowe\controller</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram2.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SportsEquipmentRental.rc">
+      <Filter>Pliki zasobów</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

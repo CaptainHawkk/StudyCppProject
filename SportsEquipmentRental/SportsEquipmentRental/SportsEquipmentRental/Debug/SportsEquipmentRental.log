@@ -1,9 +1,19 @@
-﻿  Date.cpp
+﻿  ColorPrinter.cpp
+  Date.cpp
   Equipment.cpp
+  IdController.cpp
+  LoginController.cpp
+  class template optional is only available with C++17 or later.
+  LoginService.cpp
+  class template optional is only available with C++17 or later.
   Magazine.cpp
-  RentalController.cpp
-  RentalService.cpp
   main.cpp
+  class template optional is only available with C++17 or later.
+  RentalController.cpp
+  class template optional is only available with C++17 or later.
+  RentalService.cpp
+  class template optional is only available with C++17 or later.
+  User.cpp
   Generowanie kodu...
 C:\Users\rmagr\Documents\StudyCppProject\SportsEquipmentRental\SportsEquipmentRental\SportsEquipmentRental\Date.cpp(175): warning C4715: "Date::the30DayHasPassed”: niewszystkie ścieżki kodu zwracają wartość
   SportsEquipmentRental.vcxproj -> C:\Users\rmagr\Documents\StudyCppProject\SportsEquipmentRental\SportsEquipmentRental\Debug\SportsEquipmentRental.exe

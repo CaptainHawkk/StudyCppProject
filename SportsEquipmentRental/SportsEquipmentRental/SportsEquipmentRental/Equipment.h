@@ -38,7 +38,5 @@ public:
 	string getBorrower() const;
 
 	friend ostream& operator<< (ostream& wyjscie, const Equipment& equipment);
-
-
 };
 

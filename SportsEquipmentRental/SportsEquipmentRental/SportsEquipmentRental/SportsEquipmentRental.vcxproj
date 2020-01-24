@@ -141,18 +141,34 @@
     <ClCompile Include="ColorPrinter.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="IdController.cpp" />
+    <ClCompile Include="LoginController.cpp" />
+    <ClCompile Include="LoginService.cpp" />
     <ClCompile Include="Magazine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RentalController.cpp" />
     <ClCompile Include="RentalService.cpp" />
+    <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColorPrinter.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Equipment.h" />
+    <ClInclude Include="IdController.h" />
+    <ClInclude Include="LoginController.h" />
+    <ClInclude Include="LoginService.h" />
     <ClInclude Include="Magazine.h" />
     <ClInclude Include="RentalController.h" />
     <ClInclude Include="RentalService.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="User.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram2.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SportsEquipmentRental.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
